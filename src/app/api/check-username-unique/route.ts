@@ -12,23 +12,35 @@ export async function GET(request: Request) {
 
   try {
     const { searchParams } = new URL(request.url);
-    const username = searchParams.get("username");
-    const parsed = usernameCheckSchema.safeParse({ username });
+    const queryParams = {
+      username: searchParams.get("username") || "",
+    }
+
+    const parsed = usernameCheckSchema.safeParse(queryParams);
+    console.log("Parsed result: ", parsed);
 
     if (!parsed.success) {
       const usernameErrors = parsed.error.format().username?._errors || [];
       return Response.json(
-        { success: false, message: "Invalid username", errors: usernameErrors },
+       {
+          success: false,
+          message:
+            usernameErrors?.length > 0
+              ? usernameErrors.join(', ')
+              : 'Invalid query parameters',
+        },
         { status: 400 }
       );
     }
-    console.log("Checking username:", username);
-
-    const existingUser = await UserModel.findOne({
-      username: username,
+    
+    const { username } = parsed.data;
+    const existingVerifiedUser = await UserModel.findOne({
+      username,
       isVerified: true,
     });
-    if (existingUser) {
+    console.log("Existing verified user: ", existingVerifiedUser);
+
+    if (existingVerifiedUser) {
       return Response.json(
         { success: false, message: "Username is already taken" },
         { status: 200 }
@@ -41,7 +53,7 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("Error checking username uniqueness:", error);
     return Response.json(
-      { success: false, message: "Internal server error" },
+      { success: false, message: "Error while checking username uniqueness" },
       { status: 500 }
     );
   }
