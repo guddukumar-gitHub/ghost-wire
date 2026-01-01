@@ -50,11 +50,11 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
+    <div className="flex justify-center items-center p-6">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl mb-6">
-            Welcome Back to Anonymous Messenger!
+            Welcome Back to GhostWire!
           </h1>
           <p className="mb-4">Sign in to continue your anonymous conversations.</p>
         </div>
@@ -82,7 +82,7 @@ export default function SignInForm() {
                 </FormItem>
               )}
             />
-            <Button className='w-full' type="submit">Sign In</Button>
+            <Button className='w-full cursor-pointer' type="submit">Sign In</Button>
           </form>
         </Form>
         <div className="text-center mt-4">
