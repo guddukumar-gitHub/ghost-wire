@@ -86,6 +86,7 @@ This project is built to showcase **real-world Next.js full-stack development sk
 ```file-structure
 ghostwire/
 ├── emails/ # Email templates
+├── screenshots/ # README screenshots
 ├── src/
 │ ├── app/ # Next.js App Router
 │ │ ├── (app)/ # Protected application routes
@@ -105,8 +106,7 @@ ghostwire/
 │ ├── lib/ # Database & utility logic
 │ ├── models/ # Mongoose schemas
 │ ├── schemas/ # Zod validation schemas
-│ ├── types/ # TypeScript types
-│ └── screenshots/ # README screenshots
+│ └── types/ # TypeScript types
 ├── package.json
 └── README.md
 
