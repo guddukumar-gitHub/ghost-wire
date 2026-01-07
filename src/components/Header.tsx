@@ -11,24 +11,19 @@ import {
 } from "@/components/ui/navigation-menu";
 import { CircleUserRound } from "lucide-react";
 import { User } from "next-auth";
-import { usePathname } from "next/navigation";
-import { todo } from "node:test";
 
 export function Header() {
   const isMobile = useIsMobile();
-  const { data: session } = useSession();
-  const pathname = usePathname();
+  const { data: session, status } = useSession();
+  // console.log(status);
 
-  if (!session || !session.user) {
-    return <div></div>;
-  }
+  // if (status === "loading") return null;
 
-  const { username } = session.user as User;
-  console.log(session);
+  // const username = (session?.user as User)?.username;
 
   return (
     <>
-      <div className="w-full flex items-center justify-between py-4 px-6 bg-white shadow-md">
+      <nav className="w-full flex items-center justify-between py-4 px-6 bg-white shadow-md">
         <div>
           <Link href="/" className="font-bold text-xl">
             GhostWire
@@ -37,7 +32,7 @@ export function Header() {
         <div>
           <NavigationMenu viewport={isMobile}>
             <NavigationMenuList>
-              <NavigationMenuItem >
+              <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link href="/">Home</Link>
                 </NavigationMenuLink>
@@ -51,18 +46,19 @@ export function Header() {
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
-                  {username ? (
-                    <Link href="/sign-in"><CircleUserRound /></Link>
+                  {session ? (
+                    <Link href="/dashboard">
+                      <CircleUserRound />
+                    </Link>
                   ) : (
-                    <Link href="/sign-up">Get Started</Link>
+                    <Link href="/sign-in">Get Started</Link>
                   )}
                 </NavigationMenuLink>
               </NavigationMenuItem>
-
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-      </div>
+      </nav>
     </>
   );
 }
