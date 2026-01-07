@@ -18,75 +18,111 @@ interface VerificationEmailProps {
 
 export default function VerificationEmail({
   username,
-  email,
   otp,
 }: VerificationEmailProps) {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+  const brand = {
+    name: "GhostWire",
+    primary: "#3b82f6",
+    background: "#0b0f19",
+    card: "#111827",
+    text: "#e5e7eb",
+    muted: "#9ca3af",
+  };
 
   return (
-    <Html lang="en" dir="ltr">
+    <Html lang="en">
       <Head>
-        <title>Verify your email address</title>
+        <title>Verify your email</title>
+
+        {/* Helps email clients understand dark mode */}
+        <meta name="color-scheme" content="dark light" />
+        <meta name="supported-color-schemes" content="dark light" />
+
         <Font
           fontFamily="Roboto"
-          fallbackFontFamily="Verdana"
+          fallbackFontFamily="Arial"
           webFont={{
             url: "https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
             format: "woff2",
           }}
-          fontWeight={400}
-          fontStyle="normal"
         />
       </Head>
 
-      <Preview>Complete your sign-up by verifying your email address</Preview>
+      <Preview>
+        Welcome to {brand.name} — verify your email to continue
+      </Preview>
 
-      <Section style={{ backgroundColor: "#f3f6f9", padding: "40px 0" }}>
+      {/* Outer background */}
+      <Section
+        style={{
+          backgroundColor: brand.background,
+          padding: "48px 0",
+        }}
+      >
+        {/* Card */}
         <Section
           style={{
             maxWidth: 600,
             margin: "0 auto",
-            backgroundColor: "#ffffff",
-            borderRadius: 8,
-            padding: 28,
+            backgroundColor: brand.card,
+            borderRadius: 10,
+            padding: 32,
           }}
         >
-          {/* Header */}
+          {/* Brand header */}
           <Row>
             <Heading
               as="h1"
-              style={{ margin: 0, fontSize: 22, color: "#111827" }}
+              style={{
+                margin: 0,
+                fontSize: 22,
+                color: brand.text,
+              }}
             >
-              Verify your email address
+              {brand.name}
             </Heading>
           </Row>
 
-          {/* Greeting */}
           <Row>
             <Text
               style={{
-                color: "#374151",
-                fontSize: 14,
-                marginTop: 12,
+                color: brand.muted,
+                fontSize: 13,
+                marginTop: 4,
               }}
             >
-              Hi {username},
+              Secure. Private. Anonymous.
             </Text>
           </Row>
 
-          {/* Body */}
+          {/* Welcome */}
           <Row>
             <Text
               style={{
-                color: "#374151",
-                fontSize: 15,
-                lineHeight: "22px",
-                marginTop: 10,
+                color: brand.text,
+                fontSize: 16,
+                fontWeight: 600,
+                marginTop: 20,
               }}
             >
-              Thanks for creating an account with us! To complete your
-              registration and keep your account secure, please verify your
-              email address using the code below.
+              Welcome, {username}
+            </Text>
+          </Row>
+
+          <Row>
+            <Text
+              style={{
+                color: brand.text,
+                fontSize: 14,
+                lineHeight: "22px",
+                marginTop: 8,
+              }}
+            >
+              Thanks for signing up! To activate your account and start using
+              {` ${brand.name}`}, please verify your email address.
             </Text>
           </Row>
 
@@ -95,15 +131,15 @@ export default function VerificationEmail({
             style={{
               display: "flex",
               justifyContent: "center",
-              marginTop: 22,
+              marginTop: 28,
             }}
           >
             <Text
               style={{
-                backgroundColor: "#0f172a",
+                backgroundColor: "#020617",
                 color: "#ffffff",
-                padding: "14px 22px",
-                borderRadius: 6,
+                padding: "14px 26px",
+                borderRadius: 8,
                 fontSize: 22,
                 letterSpacing: "6px",
                 fontWeight: 700,
@@ -113,74 +149,82 @@ export default function VerificationEmail({
             </Text>
           </Section>
 
-          {/* Expiry note */}
           <Row>
             <Text
               style={{
-                color: "#374151",
-                fontSize: 14,
-                lineHeight: "22px",
-                marginTop: 18,
+                color: brand.muted,
+                fontSize: 13,
+                textAlign: "center",
+                marginTop: 10,
               }}
             >
-              <strong>Important:</strong> For security reasons, email
-              verification must be completed within <strong>2 hours</strong> of
-              registration.
+              Enter this code on the verification page.
+            </Text>
+          </Row>
+
+          {/* Expiry & policy */}
+          <Row>
+            <Text
+              style={{
+                color: brand.text,
+                fontSize: 14,
+                marginTop: 22,
+              }}
+            >
+              <strong>Important:</strong> Verification must be completed within{" "}
+              <strong>2 hours</strong>.
             </Text>
           </Row>
 
           <Row>
             <Text
               style={{
-                color: "#6b7280",
+                color: brand.muted,
                 fontSize: 14,
                 lineHeight: "22px",
                 marginTop: 6,
               }}
             >
-              If your email address is not verified within this time, your
-              account information will be automatically removed from our system.
-              In such cases, the username you selected may become available to
-              other users, and you will need to register again to create a new
-              account.
+              Unverified accounts are automatically removed for security
+              reasons. Your username may be released and you will need to
+              register again if verification is not completed in time.
             </Text>
           </Row>
 
-          {/* CTA Button */}
+          {/* CTA */}
           <Section
             style={{
               display: "flex",
               justifyContent: "center",
-              marginTop: 24,
+              marginTop: 28,
             }}
           >
             <Button
               href={`${appUrl}/verify/${encodeURIComponent(username)}`}
               style={{
-                backgroundColor: "#2563eb",
+                backgroundColor: brand.primary,
                 color: "#ffffff",
-                borderRadius: 6,
-                padding: "12px 22px",
+                borderRadius: 8,
+                padding: "12px 26px",
                 textDecoration: "none",
                 fontWeight: 600,
                 fontSize: 14,
               }}
             >
-              Verify Email Address
+              Verify Email
             </Button>
           </Section>
 
-          {/* Fallback link */}
+          {/* Fallback */}
           <Row>
             <Text
               style={{
-                color: "#6b7280",
+                color: brand.muted,
                 fontSize: 13,
-                marginTop: 20,
+                marginTop: 22,
               }}
             >
-              If the button above doesn’t work, copy and paste this link into
-              your browser:
+              If the button doesn’t work, copy and paste this link:
             </Text>
           </Row>
 
@@ -189,24 +233,10 @@ export default function VerificationEmail({
               style={{
                 wordBreak: "break-all",
                 fontSize: 13,
-                color: "#2563eb",
+                color: brand.primary,
               }}
             >
               {appUrl}/verify/{username}
-            </Text>
-          </Row>
-
-          {/* Security note */}
-          <Row>
-            <Text
-              style={{
-                color: "#9ca3af",
-                fontSize: 13,
-                marginTop: 22,
-              }}
-            >
-              If you didn’t create an account using this email address, you can
-              safely ignore this message. No further action is required.
             </Text>
           </Row>
 
@@ -214,13 +244,15 @@ export default function VerificationEmail({
           <Row>
             <Text
               style={{
-                color: "#9ca3af",
+                color: brand.muted,
                 fontSize: 12,
-                marginTop: 26,
+                marginTop: 30,
                 textAlign: "center",
               }}
             >
-              © {new Date().getFullYear()} Your App Name. All rights reserved.
+              If you didn’t request this email, you can safely ignore it.
+              <br />
+              © {new Date().getFullYear()} {brand.name}. All rights reserved.
             </Text>
           </Row>
         </Section>
